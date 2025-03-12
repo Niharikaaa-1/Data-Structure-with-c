@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    int n,temp=0,i;
+    scanf("%d",&n);
+    int arr[n];
+    if(n<1||n>30000){
+        printf("Invalid input!!!");
+        exit(0);
+    }
+    for(i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+        if(arr[i]<1||arr[i]>30000){
+            printf("Invalid input!!!");
+            exit(0);
+        }
+    }
+    int count[n];
+    for(i=0;i<n;i++){
+        count[i]=0;
+    }
+    for(i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(i==j){
+                continue;
+            }
+            if(arr[i]==arr[j]){
+                count[i]++;
+            }
+        }
+    }
+    for(i=0;i<n;i++){
+        if(count[i]==0){
+            temp=i;
+            break;
+        }
+    }
+    printf("%d",arr[temp]);
+    return 0;
+}
