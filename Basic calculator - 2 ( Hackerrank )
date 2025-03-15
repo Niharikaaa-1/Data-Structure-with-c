@@ -1,0 +1,81 @@
+int top1=-1,top2=-1;
+int operand[100];
+char operator[100];
+void doProcess(){
+    int x=operand[top1--];
+    int y=operand[top1--];
+    char opr = operator[top2--];
+    int z;
+    switch(opr){         // switch is better than else if laddar
+        case '+':
+        z=y+x;
+        break;
+        case '-':
+        z=y-x;
+        break;
+        case '*':
+        z=y*x;
+        break;
+        case '/':
+        z=y/x;
+        break;
+        case '^': // carat
+        z=pow(y,x); // <math.h>
+        break;
+    }
+    operand[++top1]=z;
+}
+int precedence(char opr){
+    switch(opr){   // if break is not used such a condition is known as fall through
+
+        case '+':
+        case '-':
+         return 1;
+         case '*':
+        case '/':
+         return 2;
+         case '^':
+         return 3;
+         default:
+         return -1; // to check brackets , so the logic donot give garbage value
+    }
+}
+    int calculate(char* s) {
+   int size = strlen(s);
+    int *num=(int*)malloc(size+1);
+   for(int i=0;i<size;i++){
+    char ch=s[i];
+    if(isdigit(ch)){
+        long int num=0;
+        while(isdigit(s[i])){ 
+            num=num*10+s[i]-'0';
+       i++;
+     }
+        i--;
+operand[++top1]=num;
+    }
+    else if(ch=='+'||ch=='-'||ch=='*'||ch=='/'||ch=='^'){
+ if(top2==-1)
+ operator[++top2]=ch;
+     else{
+       while(top2!=-1 && precedence(ch)<=precedence(operator[top2])){
+        doProcess();
+    }
+    operator[++top2]=ch;
+  }
+  }
+     else if(ch=='('){
+        operator[++top2]=ch;
+    }
+    else if(ch==')'){
+        while(operator[top2]!='('){ //jab tak operator stack ke top pe ) na aaye tab tak process repeat karo& jab miljaaye tab process terminate karo &element pop karo
+            doProcess();
+        }
+        top2--;
+  }
+  }
+  while(top2!=-1){
+doProcess();
+  }
+  return  operand[top1--];
+  }
