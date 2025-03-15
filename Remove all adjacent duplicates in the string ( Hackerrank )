@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100000 // Maximum length of the input string
+
+void removeDuplicates(char *s) {
+    int top = -1;
+    char stack[MAX];
+
+    for (int i = 0; s[i] != '\0'; i++) {
+        if (top >= 0 && stack[top] == s[i]) {
+            top--; // Pop the top element if it is equal to the current character
+        } else {
+            stack[++top] = s[i]; // Push the current character onto the stack
+        }
+    }
+
+    // The stack now contains the final string without duplicates
+    stack[top + 1] = '\0';
+    printf("%s\n", stack);
+}
+
+int main() {
+    char s[MAX];
+   
+    scanf("%s", s);
+
+    removeDuplicates(s);
+
+    return 0;
+}
