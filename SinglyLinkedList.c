@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<stdbool.h>
 
 typedef struct node {
     int data;
@@ -127,19 +128,20 @@ void DeleteFromAnyPosition(int pos){
     printf("Node deleted from position %d.\n", pos);
 }
 
-void search(int val){
-    if(head == NULL){
-        return false;
-    }
+void Search(int val){
     Node* temp = head;
-    while (temp != NuLL && temp->data != val){
+    while (temp != NULL) {
+        if(temp->data == val) {
+            printf("Element found!!!!\n");
+            return;
+        }
         temp = temp->next;
     }
-    if(temp == NULL)return false;
-    return true;
+    printf("Element not found!!!!\n");
 }
 
-void sort(){
+void sort() {
+    Node* last = NULL;
     for(Node* i = head; i->next != NULL; i=i->next){
         Node* j;
         for(j = head ; j->next != last; j = j->next){
@@ -204,10 +206,10 @@ int main() {
                 InsertNodeAtAnyPosition(value, pos);
             break;
             case 4:
-                DeleteNodeFromBeg(value);
+                DeleteNodeFromBeg();
             break;
             case 5:
-                DeleteNodeFromEnd(value);
+                DeleteNodeFromEnd();
             break;
             case 6:
                 printf("Enter position : ");
@@ -216,12 +218,12 @@ int main() {
             break;
             case 7:
                 printf("Enter value to search : ");
+                int val;
                 scanf("%d",&val);
-                if (Search(val)) printf ("Element found!!!!\n");
-                else printf("Element not found!!!!\n");
+                (Search(val));
             break;
             case 8:
-                sort()
+                sort();
             break;
             case 9:
                 display();
